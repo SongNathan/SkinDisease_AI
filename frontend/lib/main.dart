@@ -1,33 +1,36 @@
-//material import하기 :일관된 디자인 가이드라인
 import 'package:flutter/material.dart';
+import '/screens/launch_screen.dart'; // launch_screen.dart 파일을 import
 
-void main() => runApp(const MyApp());
+void main() {
+  runApp(const FigmaToCodeApp());
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class FigmaToCodeApp extends StatelessWidget {
+  const FigmaToCodeApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Skin Disease App',
-        theme: ThemeData(primarySwatch: Colors.blue),
-        home: const MyHomePage());
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+      ),
+      home: const LaunchScreen(), // LaunchScreen을 첫 번째 화면으로 설정
+      routes: {
+        '/main': (context) => const MainScreen(),
+      },
+    );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+// 임시로 추가된 MainScreen
+class MainScreen extends StatelessWidget {
+  const MainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    //Scaffold : 앱 화면에 다양한 요소들을 배치
     return Scaffold(
-      appBar: AppBar(title: const Text('Skin Disease App')),
-      body: const Center(
-        child: Column(
-          children: <Widget>[Text('Hello!!'), Text('Hello!!'), Text('Hello!!')],
-        ), //Column 위젯은 요소들을 세로로 배치하는 기능
-      ),
+      appBar: AppBar(title: const Text('Main Screen')),
+      body: const Center(child: Text('Main Screen!')),
     );
   }
 }
