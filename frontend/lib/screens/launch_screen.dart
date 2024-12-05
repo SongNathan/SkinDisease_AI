@@ -1,88 +1,36 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
-class LaunchScreen extends StatelessWidget {
+class LaunchScreen extends StatefulWidget {
   const LaunchScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // 화면 크기를 동적으로 가져옴
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+  State<LaunchScreen> createState() => _LaunchScreenState();
+}
 
-    // 화면 크기에 비례하여 컨테이너 크기 조정
-    double containerWidth = screenWidth * 0.8; // 화면의 80% 크기
-    double containerHeight = screenHeight * 0.8; // 화면의 80% 크기
+class _LaunchScreenState extends State<LaunchScreen> {
+  @override
+  void initState() {
+    super.initState();
+    //3초 후 MainScreen으로 이동하도록 한다
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(context, '/main');
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // 화면 크기 가져오기
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            width: containerWidth,
-            height: containerHeight,
-            clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-            ),
-            child: Stack(
-              children: [
-                Positioned(
-                  left: screenWidth * 0.16, // 화면의 16%만큼 왼쪽 위치
-                  top: screenHeight * 0.47, // 화면의 47%만큼 위쪽 위치
-                  child: const Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'SKIN F',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 50,
-                            fontFamily: 'Kay Pho Du',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'OOO',
-                          style: TextStyle(
-                            color: Color(0xFFFF0D0D),
-                            fontSize: 50,
-                            fontFamily: 'Kay Pho Du',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'D',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 50,
-                            fontFamily: 'Kay Pho Du',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: screenWidth * 0.68, // 화면의 68%만큼 왼쪽 위치
-                  top: screenHeight * 0.41, // 화면의 41%만큼 위쪽 위치
-                  child: Container(
-                    width: screenWidth * 0.15, // 화면의 15% 크기
-                    height: screenHeight * 0.15, // 화면의 15% 크기
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/skinfood_img.png'),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+      backgroundColor: Colors.white, // 배경색을 흰색으로 설정
+      body: Center(
+        child: Image.asset(
+          'assets/images/launching_img.png', // 이미지 경로
+          width: screenWidth * 0.6, // 화면 너비의 80%로 설정
+          fit: BoxFit.contain, // 이미지 크기 조정을 유지하며 화면에 맞춤
+        ),
       ),
     );
   }
