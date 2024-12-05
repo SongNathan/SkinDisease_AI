@@ -16,6 +16,11 @@ class Test(Resource):
 
         self.state_dict = torch.load("./backend/model/ResNet50.pth", map_location=torch.device('cpu'))#로컬 컴퓨터가 cpu라서 cpu로 돌리게끔 매핑
         self.model.load_state_dict(self.state_dict['model_state_dict'])# 모델에 state_dict 적용
+        print(self.state_dict.keys())
+        
+        self.model.to(self.device)
+        self.model.eval()
+        
 
         #클래스 이름
         self.class_names = self.state_dict['class_names']
@@ -30,7 +35,7 @@ class Test(Resource):
         image_file = request.files['image'] 
 
         try: #이미지 파일을 메모리에서 바로 열기
-            image = Image.open(image_file.stream) #stream으로 이미지를 open
+            image = Image.open(image_file.stream).convert("RGB") #stream으로 이미지를 open
         except Exception as e:
             return {"error" : f"Failed to open image: {str(e)}"}, 400
         
