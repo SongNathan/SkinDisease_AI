@@ -6,71 +6,155 @@ class DiagnosisScreen extends StatefulWidget {
   const DiagnosisScreen({super.key});
 
   @override
-  _DiagnosisScreenState createState() => _DiagnosisScreenState();
+  State<DiagnosisScreen> createState() => _DiagnosisScreenState();
 }
 
 class _DiagnosisScreenState extends State<DiagnosisScreen> {
-  File? _image; // 선택한 이미지 파일을 저장할 변수
+  File? _image; // Variable to store the selected image file
 
-  // 이미지 선택을 위한 함수
+  // Function to pick an image
   Future<void> _pickImage() async {
     final picker = ImagePicker();
-    // 갤러리에서 이미지를 선택
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path); // 선택한 이미지를 저장
+        _image = File(pickedFile.path);
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('진단 화면'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // 이미지가 선택되지 않은 경우 회색 배경과 + 표시
-          _image == null
-              ? Column(
-                  children: [
-                    Image.asset('assets/images/gray_picture.png'), // 회색 배경 이미지
-                    const SizedBox(height: 8),
-                    Image.asset('assets/images/red_plus.png'), // 빨간 + 이미지
-                  ],
-                )
-              : Image.file(_image!), // 선택된 이미지가 있으면 그 이미지를 표시
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
-          const SizedBox(height: 16),
-          // 사진 업로드 버튼
-          ElevatedButton(
-            onPressed: _pickImage, // 사진 선택 함수 호출
-            child: const Text('파일 업로드'),
-          ),
-          const SizedBox(height: 16),
-          // 진단 받기 버튼
-          ElevatedButton(
-            onPressed: () {
-              // 진단 받기 버튼을 누르면 결과 화면으로 이동
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ResultScreen()),
-              );
-            },
-            child: const Text('진단 받기'),
-          ),
-        ],
+    return Scaffold(
+      backgroundColor: const Color(0xFFF9F7FC),
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.05,
+          vertical: screenHeight * 0.05,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "SKIN F",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: screenWidth * 0.08,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "OOO",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: screenWidth * 0.08,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'D',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: screenWidth * 0.08,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.02),
+            // Example image or user-uploaded image
+            Center(
+              child: _image == null
+                  ? Image.asset(
+                      'assets/images/ex_img.png',
+                      height: screenHeight * 0.25,
+                      width: screenWidth * 0.5,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.file(
+                      _image!,
+                      height: screenHeight * 0.25,
+                      width: screenWidth * 0.5,
+                      fit: BoxFit.cover,
+                    ),
+            ),
+            SizedBox(height: screenHeight * 0.02),
+            Center(
+              child: Text(
+                '사진을 등록해주세요',
+                style: TextStyle(fontSize: screenWidth * 0.045),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.03),
+            // File upload button
+            Center(
+              child: ElevatedButton(
+                onPressed: _pickImage,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    vertical: screenHeight * 0.02,
+                    horizontal: screenWidth * 0.1,
+                  ),
+                ),
+                child: Text(
+                  '파일 업로드',
+                  style: TextStyle(fontSize: screenWidth * 0.045),
+                ),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.02),
+            // Diagnosis button
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ResultScreen(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    vertical: screenHeight * 0.02,
+                    horizontal: screenWidth * 0.1,
+                  ),
+                ),
+                child: Text(
+                  '진단 받기',
+                  style: TextStyle(fontSize: screenWidth * 0.045),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-// 결과 화면
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key});
 

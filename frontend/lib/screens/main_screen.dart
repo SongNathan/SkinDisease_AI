@@ -155,7 +155,7 @@ class MainScreen extends StatelessWidget {
                 ),
                 icon: const Icon(Icons.touch_app, color: Colors.black),
                 label: Text(
-                  '빠른 진단 받기',
+                  '빠른 진단 받기!!',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: screenWidth * 0.045,
