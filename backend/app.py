@@ -6,7 +6,10 @@ from test import Test
 app = Flask(__name__)
 api = Api(app)
 
+# '/test' 경로에 Test 리소스 추가
 api.add_resource(Test, '/test')
 
+# app.run() 호출 제거 (PythonAnywhere에서 WSGI로 실행되므로)
 if __name__ == '__main__':
-    app.run('0.0.0.0', port = 8080, debug = True)
+    # 로컬에서 실행할 때만 사용, PythonAnywhere에서는 필요 없음
+    app.run(debug=True)
