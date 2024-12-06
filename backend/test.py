@@ -45,4 +45,4 @@ class Test(Resource):
             _, predicted = torch.max(output, 1)
         predicted_class = self.class_names[predicted.item()]
 
-        return {"label": predicted_class}, 200 #임의 사진을 가지고 예측한 class이름 반환
+        return predicted_class, 200 #임의 사진을 가지고 예측한 class이름 반환
