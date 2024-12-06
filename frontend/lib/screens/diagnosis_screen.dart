@@ -12,10 +12,22 @@ class DiagnosisScreen extends StatefulWidget {
 class _DiagnosisScreenState extends State<DiagnosisScreen> {
   File? _image; // Variable to store the selected image file
 
-  // Function to pick an image
-  Future<void> _pickImage() async {
+  // Function to pick an image from the gallery
+  Future<void> _pickImageFromGallery() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  // Function to capture an image using the camera
+  Future<void> _captureImageWithCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
       setState(() {
@@ -37,8 +49,9 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
           vertical: screenHeight * 0.05,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // Title
             Center(
               child: Text.rich(
                 TextSpan(
@@ -71,24 +84,45 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                 ),
               ),
             ),
-            SizedBox(height: screenHeight * 0.02),
-            // Example image or user-uploaded image
+            SizedBox(height: screenHeight * 0.03),
+
+            // Image Container
             Center(
-              child: _image == null
-                  ? Image.asset(
-                      'assets/images/ex_img.png',
-                      height: screenHeight * 0.25,
-                      width: screenWidth * 0.5,
-                      fit: BoxFit.cover,
-                    )
-                  : Image.file(
-                      _image!,
-                      height: screenHeight * 0.25,
-                      width: screenWidth * 0.5,
-                      fit: BoxFit.cover,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    height: screenHeight * 0.3,
+                    width: screenWidth * 0.6,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/gray_picture.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
+                  ),
+                  if (_image == null)
+                    Image.asset(
+                      'assets/images/red_plus.png',
+                      width: screenWidth * 0.1,
+                      height: screenWidth * 0.1,
+                    )
+                  else
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
+                        _image!,
+                        height: screenHeight * 0.3,
+                        width: screenWidth * 0.6,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                ],
+              ),
             ),
             SizedBox(height: screenHeight * 0.02),
+
+            // Instruction Text
             Center(
               child: Text(
                 '사진을 등록해주세요',
@@ -96,30 +130,55 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
               ),
             ),
             SizedBox(height: screenHeight * 0.03),
-            // File upload button
-            Center(
-              child: ElevatedButton(
-                onPressed: _pickImage,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.circular(8),
+
+            // Buttons (Upload and Camera)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: _pickImageFromGallery,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      vertical: screenHeight * 0.02,
+                      horizontal: screenWidth * 0.05,
+                    ),
                   ),
-                  padding: EdgeInsets.symmetric(
-                    vertical: screenHeight * 0.02,
-                    horizontal: screenWidth * 0.1,
+                  child: Text(
+                    '파일 업로드',
+                    style: TextStyle(fontSize: screenWidth * 0.04),
                   ),
                 ),
-                child: Text(
-                  '파일 업로드',
-                  style: TextStyle(fontSize: screenWidth * 0.045),
+                SizedBox(width: screenWidth * 0.03),
+                ElevatedButton(
+                  onPressed: _captureImageWithCamera,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      vertical: screenHeight * 0.02,
+                      horizontal: screenWidth * 0.05,
+                    ),
+                  ),
+                  child: Text(
+                    '카메라 촬영',
+                    style: TextStyle(fontSize: screenWidth * 0.04),
+                  ),
                 ),
-              ),
+              ],
             ),
-            SizedBox(height: screenHeight * 0.02),
-            // Diagnosis button
+            SizedBox(height: screenHeight * 0.03),
+
+            // Diagnosis Button
             Center(
               child: ElevatedButton(
                 onPressed: () {

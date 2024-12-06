@@ -20,7 +20,8 @@ class MainScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF9F7FC), // 배경색 설정
-      body: Padding(
+      body: SingleChildScrollView(
+        // SingleChildScrollView로 감싸서 스크롤 가능하도록 설정
         padding: EdgeInsets.symmetric(
           horizontal: screenWidth * 0.05,
           vertical: screenHeight * 0.05,

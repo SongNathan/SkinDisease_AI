@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
-import '/screens/launch_screen.dart'; // launch_screen.dart 파일을 import
-import '/screens/main_screen.dart'; // launch_screen.dart 파일을 import
+import 'package:permission_handler/permission_handler.dart'; // 권한 패키지 추가
+import '/screens/launch_screen.dart'; // LaunchScreen import
+import '/screens/main_screen.dart'; // MainScreen import
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Flutter 엔진 초기화
+  await requestPermissions(); // 권한 요청
   runApp(const FigmaToCodeApp());
+}
+
+Future<void> requestPermissions() async {
+  // 요청할 권한 목록
+  final permissions = [
+    Permission.storage, // 파일 저장 권한
+    Permission.camera, // 카메라 권한
+    Permission.photos, // 미디어 접근 권한 (Android 13 이상)
+  ];
+
+  for (var permission in permissions) {
+    if (await permission.isDenied) {
+      await permission.request(); // 권한 요청
+    }
+  }
 }
 
 class FigmaToCodeApp extends StatelessWidget {
