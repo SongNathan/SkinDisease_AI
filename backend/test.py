@@ -16,14 +16,13 @@ class Test(Resource):
 
         self.state_dict = torch.load("./backend/model/ResNet50.pth", map_location=torch.device('cpu'))#로컬 컴퓨터가 cpu라서 cpu로 돌리게끔 매핑
         self.model.load_state_dict(self.state_dict['model_state_dict'])# 모델에 state_dict 적용
-        print(self.state_dict.keys())
-        
+
         self.model.to(self.device)
         self.model.eval()
         
 
         #클래스 이름
-        self.class_names = self.state_dict['class_names']
+        self.class_names = self.state_dict['class_names'] #state_dict에서 'class_names' 받기
         self.transform = transforms.Compose([
             transforms.Resize((224, 224)),  # ResNet 입력 크기
             transforms.ToTensor(),
