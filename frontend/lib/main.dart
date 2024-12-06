@@ -6,7 +6,7 @@ import '/screens/main_screen.dart'; // MainScreen import
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Flutter 엔진 초기화
   await requestPermissions(); // 권한 요청
-  runApp(const FigmaToCodeApp());
+  runApp(const SkinDiseaseApp());
 }
 
 Future<void> requestPermissions() async {
@@ -24,8 +24,8 @@ Future<void> requestPermissions() async {
   }
 }
 
-class FigmaToCodeApp extends StatelessWidget {
-  const FigmaToCodeApp({super.key});
+class SkinDiseaseApp extends StatelessWidget {
+  const SkinDiseaseApp({super.key});
 
   @override
   Widget build(BuildContext context) {
