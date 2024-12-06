@@ -14,7 +14,7 @@ class Test(Resource):
         self.model = models.resnet50(pretrained=True)
         self.model.fc = torch.nn.Linear(self.model.fc.in_features, 6)
 
-        self.state_dict = torch.load("./backend/model/ResNet50_2.pth", map_location=torch.device('cpu'))#로컬 컴퓨터가 cpu라서 cpu로 돌리게끔 매핑
+        self.state_dict = torch.load("/home/SongNathan/backend/model/ResNet50_2.pth", map_location=torch.device('cpu'))#로컬 컴퓨터가 cpu라서 cpu로 돌리게끔 매핑
         self.model.load_state_dict(self.state_dict['model_state_dict'])# 모델에 state_dict 적용
 
         self.model.to(self.device)
