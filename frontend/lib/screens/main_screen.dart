@@ -9,6 +9,15 @@ class MainScreen extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
+    final categories = [
+      '여드름',
+      '주사염',
+      '건선',
+      '아토피',
+      '두드러기',
+      '피부암',
+    ];
+
     return Scaffold(
       backgroundColor: const Color(0xFFF9F7FC), // 배경색 설정
       body: Padding(
@@ -96,11 +105,11 @@ class MainScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: screenHeight * 0.04),
-            // 카테고리 버튼들 (기능 없음)
+            // 카테고리 버튼들 (6개)
             Wrap(
               spacing: screenWidth * 0.03,
               runSpacing: screenHeight * 0.02,
-              children: ['여드름', '습진', '건선', '주사염']
+              children: categories
                   .map(
                     (category) => Container(
                       padding: EdgeInsets.symmetric(
@@ -162,26 +171,6 @@ class MainScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: screenHeight * 0.04),
-            // 이미지 리스트 (기능 없음)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                'assets/images/Acne_img.png',
-                'assets/images/Eczema_img.png',
-                'assets/images/Psoriasis_img.png',
-                'assets/images/Rosacea_img.png',
-              ]
-                  .map(
-                    (imagePath) => Image.asset(
-                      imagePath,
-                      width: screenWidth * 0.2,
-                      height: screenHeight * 0.12,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                  .toList(),
             ),
           ],
         ),
