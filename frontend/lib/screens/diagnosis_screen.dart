@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'loading_screen.dart'; // 분석 중 화면 import
+import 'loading_screen.dart';
+import '../widgets/diagnosis_image_display.dart';
+import '../widgets/diagnosis_buttons.dart';
+import '../widgets/logo_widget.dart'; // LogoWidget 추가
 
 class DiagnosisScreen extends StatefulWidget {
   const DiagnosisScreen({super.key});
@@ -56,108 +59,29 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Center(
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "SKIN F",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: screenWidth * 0.08,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextSpan(
-                      text: "OOO",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: screenWidth * 0.08,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'D',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: screenWidth * 0.08,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // LogoWidget 사용
+            const Center(child: LogoWidget()),
             SizedBox(height: screenHeight * 0.03),
-            Text(
+            const Text(
               '사진을 등록해주세요',
               style: TextStyle(
-                fontSize: screenWidth * 0.045,
-                fontWeight: FontWeight.w500,
-              ),
+                  color: Color(0xFF585858),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500),
             ),
             SizedBox(height: screenHeight * 0.02),
-            Center(
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    height: screenHeight * 0.3,
-                    width: screenWidth * 0.6,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black26),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: _image == null
-                        ? Icon(
-                            Icons.add,
-                            size: screenWidth * 0.1,
-                            color: Colors.red,
-                          )
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.file(
-                              _image!,
-                              height: screenHeight * 0.3,
-                              width: screenWidth * 0.6,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                  ),
-                ],
-              ),
+            // 이미지 업로드 위젯
+            DiagnosisImageDisplay(
+              image: _image,
+              screenWidth: screenWidth,
+              screenHeight: screenHeight,
             ),
             SizedBox(height: screenHeight * 0.02),
-            ElevatedButton(
-              onPressed: _pickImageFromGallery,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: Text(
-                '파일 업로드',
-                style: TextStyle(fontSize: screenWidth * 0.04),
-              ),
-            ),
-            SizedBox(height: screenHeight * 0.03),
-            ElevatedButton(
-              onPressed: _startAnalysis,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: Text(
-                '진단 받기',
-                style: TextStyle(fontSize: screenWidth * 0.045),
-              ),
+            // 버튼 위젯
+            DiagnosisButtons(
+              onPickImage: _pickImageFromGallery,
+              onStartAnalysis: _startAnalysis,
+              screenWidth: screenWidth,
             ),
           ],
         ),
