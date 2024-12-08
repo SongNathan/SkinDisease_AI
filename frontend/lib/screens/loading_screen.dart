@@ -91,7 +91,8 @@ class LoadingScreen extends StatelessWidget {
                 try {
                   final result =
                       jsonDecode(snapshot.data!) as Map<String, dynamic>;
-                  final className = result["class_name"] ?? "Unknown";
+                  final diseaseName =
+                      result["disease_name"] ?? "No Disease Name available";
                   final description =
                       result["description"] ?? "No description available";
 
@@ -100,7 +101,7 @@ class LoadingScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ResultScreen(
-                          className: className,
+                          diseaseName: diseaseName,
                           description: description,
                           image: image,
                         ),

@@ -69,12 +69,12 @@ class Test(Resource):
         class_info = ClassDescription.query.filter_by(class_name=predicted_class).first()
         if class_info:
             response = {
-                "class_name": predicted_class,
+                "disease_name": class_info.disease_name,
                 "description": class_info.description
             }
         else:
             response = {
-                "class_name": predicted_class,
+                "disease_name": "No Disease Name available",
                 "description": "No description available."
             }
 

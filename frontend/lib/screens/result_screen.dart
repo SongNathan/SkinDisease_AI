@@ -4,12 +4,12 @@ import '../widgets/logo_widget.dart'; // LogoWidget import
 import 'main_screen.dart';
 
 class ResultScreen extends StatelessWidget {
-  final String className; // 진단 결과 텍스트
+  final String diseaseName; // 진단 결과 텍스트
   final String description; // 상세 설명 텍스트
   final File image; // DiagnosisScreen에서 업로드한 이미지
 
   const ResultScreen({
-    required this.className,
+    required this.diseaseName,
     required this.description,
     required this.image,
     super.key,
@@ -46,16 +46,16 @@ class ResultScreen extends StatelessWidget {
             SizedBox(height: screenHeight * 0.03),
             // 진단 결과 텍스트
             Text(
-              "진단 결과 : $className 가 의심됩니다!",
+              "진단 결과 : $diseaseName 가 의심됩니다!",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
-                fontSize: screenWidth * 0.05,
+                fontSize: screenWidth * 0.04,
                 fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: screenHeight * 0.02),
-            // 설명 텍스트
+            // 진단 결과에 대한 상세 설명 텍스트
             ConstrainedBox(
               constraints: BoxConstraints(
                 maxWidth: screenWidth * 0.8, // 텍스트 폭 제한
