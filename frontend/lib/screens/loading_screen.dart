@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'result_screen.dart'; // 결과 화면 import
+import 'dart:convert';
+import 'result_screen.dart';
+import '../widgets/logo_widget.dart';
 
 class LoadingScreen extends StatelessWidget {
   final File image;
@@ -36,101 +38,87 @@ class LoadingScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF9F7FC),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * 0.05,
-          vertical: screenHeight * 0.1,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "SKIN F",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: screenWidth * 0.08,
-                        fontWeight: FontWeight.bold,
-                      ),
+      body: Column(
+        children: [
+          // 로고
+          Padding(
+            padding: EdgeInsets.only(top: screenHeight * 0.1),
+            child: const LogoWidget(),
+          ),
+          // Divider 제거됨
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // 화살표
+                  SizedBox(
+                    height: screenHeight * 0.1,
+                    width: screenHeight * 0.1,
+                    child: const CircularProgressIndicator(
+                      strokeWidth: 3.0, // 화살표 두께
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
                     ),
-                    TextSpan(
-                      text: "OOO",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: screenWidth * 0.08,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  ),
+                  SizedBox(height: screenHeight * 0.02), // 화살표와 텍스트 간격
+                  // 텍스트
+                  const Text(
+                    "분석 중입니다. 잠시만 기다려 주세요...",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black87,
                     ),
-                    TextSpan(
-                      text: 'D',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: screenWidth * 0.08,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: screenHeight * 0.05),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.file(
-                image,
-                height: screenHeight * 0.3,
-                width: screenWidth * 0.6,
-                fit: BoxFit.cover,
-              ),
-            ),
-            SizedBox(height: screenHeight * 0.05),
-            const Text(
-              "분석 중입니다. 잠시만 기다려 주세요...",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black87,
-              ),
-            ),
-            SizedBox(height: screenHeight * 0.05),
-            FutureBuilder<String>(
-              future: _sendImageToServer(image),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                }
+          ),
+          // FutureBuilder 로직 (변경 없음)
+          FutureBuilder<String>(
+            future: _sendImageToServer(image),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const SizedBox.shrink(); // 로딩 중 빈 상태
+              }
+              if (snapshot.hasError) {
+                return Text(
+                  '오류 발생: ${snapshot.error}',
+                  style: const TextStyle(color: Colors.red),
+                );
+              }
+              if (snapshot.hasData) {
+                try {
+                  final result =
+                      jsonDecode(snapshot.data!) as Map<String, dynamic>;
+                  final className = result["class_name"] ?? "Unknown";
+                  final description =
+                      result["description"] ?? "No description available";
 
-                if (snapshot.hasError) {
-                  return Text(
-                    '오류 발생: ${snapshot.error}',
-                    style: const TextStyle(color: Colors.red),
-                  );
-                }
-
-                if (snapshot.hasData) {
-                  // 서버에서 받은 결과를 ResultScreen으로 전달
-                  final result = snapshot.data!;
                   Future.microtask(() {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ResultScreen(
-                          result: result,
-                          image: image, // 업로드된 이미지 전달
+                          className: className,
+                          description: description,
+                          image: image,
                         ),
                       ),
                     );
                   });
-                  return const SizedBox.shrink(); // 화면 전환 중 빈 공간 유지
+                  return const SizedBox.shrink();
+                } catch (e) {
+                  return Text(
+                    '데이터 파싱 오류: $e',
+                    style: const TextStyle(color: Colors.red),
+                  );
                 }
-
-                return const Text('예기치 않은 오류가 발생했습니다.');
-              },
-            ),
-          ],
-        ),
+              }
+              return const Text('예기치 않은 오류가 발생했습니다.');
+            },
+          ),
+        ],
       ),
     );
   }

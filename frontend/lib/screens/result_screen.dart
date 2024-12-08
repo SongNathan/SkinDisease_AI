@@ -4,11 +4,13 @@ import '../widgets/logo_widget.dart'; // LogoWidget import
 import 'main_screen.dart';
 
 class ResultScreen extends StatelessWidget {
-  final String result; // 진단 결과 텍스트
+  final String className; // 진단 결과 텍스트
+  final String description; // 상세 설명 텍스트
   final File image; // DiagnosisScreen에서 업로드한 이미지
 
   const ResultScreen({
-    required this.result,
+    required this.className,
+    required this.description,
     required this.image,
     super.key,
   });
@@ -36,58 +38,36 @@ class ResultScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: Image.file(
                 image,
-                height: screenHeight * 0.2,
-                width: screenWidth * 0.4,
+                height: screenHeight * 0.25,
+                width: screenWidth * 0.5,
                 fit: BoxFit.cover,
               ),
             ),
             SizedBox(height: screenHeight * 0.03),
-            const Divider(
-              thickness: 1.5,
-              color: Colors.black26,
-            ),
-            SizedBox(height: screenHeight * 0.02),
-            // 두 번째 이미지
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.file(
-                image,
-                height: screenHeight * 0.22,
-                width: screenWidth * 0.45,
-                fit: BoxFit.cover,
+            // 진단 결과 텍스트
+            Text(
+              "진단 결과 : $className 가 의심됩니다!",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: screenWidth * 0.05,
+                fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: screenHeight * 0.02),
-            // 진단 결과 텍스트
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: "진단 결과 : ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: screenWidth * 0.035,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  TextSpan(
-                    text: result,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: screenWidth * 0.035,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  TextSpan(
-                    text: " 가 의심됩니다!",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: screenWidth * 0.035,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
+            // 설명 텍스트
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: screenWidth * 0.8, // 텍스트 폭 제한
+              ),
+              child: Text(
+                description,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: screenWidth * 0.04,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
             const Spacer(),
