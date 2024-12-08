@@ -27,11 +27,11 @@ class MainScreen extends StatelessWidget {
             SizedBox(height: screenHeight * 0.04),
             DiseaseSearchBar(
                 screenWidth: screenWidth,
-                screenHeight: screenHeight), // 검색 필드와 버튼
+                screenHeight: screenHeight), // 검색 필드와 버튼(기능 없음)
             SizedBox(height: screenHeight * 0.04),
             CategoriesWidget(
                 screenWidth: screenWidth,
-                screenHeight: screenHeight), // 카테고리 버튼
+                screenHeight: screenHeight), // 카테고리 버튼(기능 없음)
             SizedBox(height: screenHeight * 0.04),
             Text(
               '피부 질환 분석 시스템',

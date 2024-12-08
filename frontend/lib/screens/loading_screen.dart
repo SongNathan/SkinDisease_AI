@@ -33,7 +33,7 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    // final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -63,7 +63,7 @@ class LoadingScreen extends StatelessWidget {
                   SizedBox(height: screenHeight * 0.02), // 화살표와 텍스트 간격
                   // 텍스트
                   const Text(
-                    "분석 중입니다. 잠시만 기다려 주세요...",
+                    "분석 중",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
