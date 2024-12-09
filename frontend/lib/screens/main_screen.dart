@@ -3,6 +3,7 @@ import '../widgets/logo_widget.dart';
 import '../widgets/disease_search_bar.dart';
 import '../widgets/categories_widget.dart';
 import '../widgets/diagnosis_button.dart';
+import '../widgets/image_grid_widget.dart'; // 수정된 ImageGridWidget 임포트
 import '../styles/app_styles.dart';
 
 class MainScreen extends StatelessWidget {
@@ -18,29 +19,31 @@ class MainScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
           horizontal: screenWidth * 0.05,
-          vertical: screenHeight * 0.05,
+          vertical: screenHeight * 0.03,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
           children: [
-            const Center(child: LogoWidget()), // 로고 위젯
-            SizedBox(height: screenHeight * 0.04),
+            const Center(child: LogoWidget()),
+            SizedBox(height: screenHeight * 0.05),
             DiseaseSearchBar(
-                screenWidth: screenWidth,
-                screenHeight: screenHeight), // 검색 필드와 버튼(기능 없음)
+                screenWidth: screenWidth * 0.9, screenHeight: screenHeight),
             SizedBox(height: screenHeight * 0.04),
             CategoriesWidget(
-                screenWidth: screenWidth,
-                screenHeight: screenHeight), // 카테고리 버튼(기능 없음)
+                screenWidth: screenWidth * 0.9, screenHeight: screenHeight),
             SizedBox(height: screenHeight * 0.04),
-            Text(
-              '피부 질환 분석 시스템',
-              style: AppStyles.subtitleStyle(screenWidth),
-            ),
-            SizedBox(height: screenHeight * 0.03),
+
+            // QuickDiagnosisButton 위젯
             QuickDiagnosisButton(
-                screenWidth: screenWidth,
-                screenHeight: screenHeight), // 빠른 진단 버튼
+                screenWidth: screenWidth, screenHeight: screenHeight),
+
+            SizedBox(height: screenHeight * 0.05), // 텍스트와 이미지 간 간격
+
+            // 수정된 ImageGridWidget
+            ImageGridWidget(
+              screenWidth: screenWidth,
+              screenHeight: screenHeight,
+            ),
           ],
         ),
       ),

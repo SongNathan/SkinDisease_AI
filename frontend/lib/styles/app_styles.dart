@@ -22,13 +22,15 @@ class AppStyles {
     return TextStyle(
       color: Colors.black,
       fontSize: screenWidth * 0.045,
+      fontWeight: FontWeight.w500,
     );
   }
 
   static TextStyle buttonTextStyle(double screenWidth) {
     return TextStyle(
       color: Colors.black,
-      fontSize: screenWidth * 0.045,
+      fontSize: screenWidth * 0.05,
+      fontWeight: FontWeight.bold,
     );
   }
 
@@ -36,6 +38,7 @@ class AppStyles {
     return TextStyle(
       fontSize: screenWidth * 0.04,
       color: const Color(0xFF868181),
+      fontWeight: FontWeight.w600,
     );
   }
 }

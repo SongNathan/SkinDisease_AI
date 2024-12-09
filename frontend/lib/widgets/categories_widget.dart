@@ -22,24 +22,32 @@ class CategoriesWidget extends StatelessWidget {
       '피부암',
     ];
 
-    return Wrap(
-      spacing: screenWidth * 0.03,
-      runSpacing: screenHeight * 0.02,
-      children: categories
-          .map(
-            (category) => Container(
-              padding: EdgeInsets.symmetric(
-                vertical: screenHeight * 0.015,
-                horizontal: screenWidth * 0.05,
-              ),
-              decoration: AppStyles.boxDecoration(screenWidth),
-              child: Text(
-                category,
-                style: AppStyles.categoryTextStyle(screenWidth),
-              ),
+    return Padding(
+      padding:
+          EdgeInsets.symmetric(horizontal: screenWidth * 0.05), // 왼쪽, 오른쪽 여백 추가
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3, // 3열로 설정
+          crossAxisSpacing: screenWidth * 0.02, // 가로 간격
+          mainAxisSpacing: screenHeight * 0.02, // 세로 간격
+          childAspectRatio: 2, // 비율을 2로 설정하여 버튼이 가로로 길게 보이도록 함
+        ),
+        itemCount: categories.length,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(), // 스크롤 비활성화
+        itemBuilder: (context, index) {
+          return Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
+            decoration: AppStyles.boxDecoration(screenWidth),
+            child: Text(
+              categories[index],
+              style: AppStyles.categoryTextStyle(screenWidth),
+              textAlign: TextAlign.center,
             ),
-          )
-          .toList(),
+          );
+        },
+      ),
     );
   }
 }

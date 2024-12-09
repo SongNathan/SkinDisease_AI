@@ -51,17 +51,19 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF9F7FC),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
           horizontal: screenWidth * 0.05,
-          vertical: screenHeight * 0.05,
+          vertical:
+              screenHeight * 0.03, // Same vertical padding as in MainScreen
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment:
+              CrossAxisAlignment.center, // Center align all elements
           children: [
-            // LogoWidget 사용
-            const Center(child: LogoWidget()),
-            SizedBox(height: screenHeight * 0.03),
+            const Center(child: LogoWidget()), // LogoWidget stays centered
+            SizedBox(
+                height: screenHeight * 0.05), // Adjust spacing between widgets
             const Text(
               '사진을 등록해주세요',
               style: TextStyle(
@@ -69,15 +71,17 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                   fontSize: 16,
                   fontWeight: FontWeight.w500),
             ),
-            SizedBox(height: screenHeight * 0.02),
-            // 이미지 업로드 위젯
+            SizedBox(height: screenHeight * 0.03), // Adjust spacing after text
+            // DiagnosisImageDisplay widget
             DiagnosisImageDisplay(
               image: _image,
               screenWidth: screenWidth,
               screenHeight: screenHeight,
             ),
-            SizedBox(height: screenHeight * 0.02),
-            // 버튼 위젯
+            SizedBox(
+                height: screenHeight *
+                    0.04), // Adjust spacing between image and buttons
+            // DiagnosisButtons widget
             DiagnosisButtons(
               onPickImage: _pickImageFromGallery,
               onStartAnalysis: _startAnalysis,

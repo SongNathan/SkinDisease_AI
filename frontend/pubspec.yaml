@@ -64,10 +64,10 @@ flutter:
   assets:
     -  assets/images/skinfood_img.png
     -  assets/images/launching_img.png
-    -  assets/images/Acne_img.png
-    -  assets/images/Psoriasis_img.png
-    -  assets/images/Eczema_img.png
-    -  assets/images/Rosacea_img.png
+    -  assets/images/main1.png
+    -  assets/images/main2.png
+    -  assets/images/main3.png
+    -  assets/images/main4.png
     -  assets/images/skinfood_main_img.png
     -  assets/images/gray_picture.png
     -  assets/images/red_plus.png
