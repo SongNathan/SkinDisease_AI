@@ -14,7 +14,7 @@ class Test(Resource):
 
         # ResNet50 모델 불러오기
         self.model = models.resnet50(pretrained=False)  # 사전 학습된 모델 로드하지 않음
-        self.model.fc = torch.nn.Linear(self.model.fc.in_features, 4)  # 출력 클래스 수 6으로 변경
+        self.model.fc = torch.nn.Linear(self.model.fc.in_features, 4)  # 출력 클래스 수 4으로 변경
 
         # 모델의 상태_dict 불러오기
         model_path = '/home/SongNathan/mysite/model/ResNet50_final.pth'  # 절대 경로 사용
