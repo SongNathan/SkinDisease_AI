@@ -28,7 +28,7 @@ class _LaunchScreenState extends State<LaunchScreen> {
       body: Center(
         child: Image.asset(
           'assets/images/launching_img.png', // 이미지 경로
-          width: screenWidth * 0.6, // 화면 너비의 80%로 설정
+          width: screenWidth * 0.6, // 화면 너비의 60%로 설정
           fit: BoxFit.contain, // 이미지 크기 조정을 유지하며 화면에 맞춤
         ),
       ),

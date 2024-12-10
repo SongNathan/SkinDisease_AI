@@ -15,14 +15,14 @@ class QuickDiagnosisButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      // Column을 Center로 감싸서 위젯들이 중앙에 위치하도록 함
+      //위젯들 중앙에 위치하도록 함
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center, // 세로 방향 중앙 정렬
-        crossAxisAlignment: CrossAxisAlignment.center, // 가로 방향 중앙 정렬
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // "피부 질환 분석 시스템" 텍스트
+          // "피부 질환 분석 시스템" Text
           Padding(
-            padding: EdgeInsets.only(bottom: screenHeight * 0.005), // 간격 줄이기
+            padding: EdgeInsets.only(bottom: screenHeight * 0.005),
             child: Text(
               '피부 질환 분석 시스템',
               style: AppStyles.subtitleStyle(screenWidth * 0.9),
@@ -54,9 +54,9 @@ class QuickDiagnosisButton extends StatelessWidget {
               mainAxisSize: MainAxisSize.min, // Row의 크기를 텍스트와 아이콘의 크기에 맞게 조정
               children: [
                 Icon(
-                  Icons.touch_app, // 손 모양 아이콘을 대신 사용
+                  Icons.touch_app, // 손 모양 아이콘
                   color: Colors.black,
-                  size: screenHeight * 0.03, // 아이콘 크기 조정
+                  size: screenHeight * 0.03,
                 ),
                 SizedBox(width: screenWidth * 0.02), // 아이콘과 텍스트 간의 간격
                 Text(

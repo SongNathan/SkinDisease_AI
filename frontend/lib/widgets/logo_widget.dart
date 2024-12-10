@@ -42,7 +42,7 @@ class LogoWidget extends StatelessWidget {
             ],
           ),
         ),
-        // 검은 줄 추가
+        // 아래에 검은 줄 추가
         Container(
           margin: const EdgeInsets.only(top: 8.0),
           height: 2,

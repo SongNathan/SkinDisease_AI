@@ -21,7 +21,7 @@ class AppStyles {
   static TextStyle categoryTextStyle(double screenWidth) {
     return TextStyle(
       color: Colors.black,
-      fontSize: screenWidth * 0.045,
+      fontSize: screenWidth * 0.049,
       fontWeight: FontWeight.w500,
     );
   }
